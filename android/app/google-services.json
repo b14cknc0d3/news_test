@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "153775470578",
+    "project_id": "news-app203",
+    "storage_bucket": "news-app203.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:153775470578:android:16cc85456af3da901fdd6b",
+        "android_client_info": {
+          "package_name": "com.example.ansar_news"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "153775470578-d7c9di4gpngqbnj27glscs9vbq480m02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVOc8Akz-4WJIhJ1kPDDchN-c7JP4CsHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "153775470578-d7c9di4gpngqbnj27glscs9vbq480m02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
