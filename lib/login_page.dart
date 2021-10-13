@@ -1,9 +1,9 @@
-// ignore_for_file: deprecated_member_use, duplicate_ignore
-
+// ignore_for_file: deprecated_member_use, duplicate_ignore, prefer_typing_uninitialized_variables
+import 'package:ansar_news/main.dart';
 import 'package:flutter/material.dart';
 import 'signup_page.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 // ignore: use_key_in_widget_constructors
 class Login extends StatefulWidget {
@@ -14,10 +14,54 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
+    // Intense Area
+    final TextEditingController name = TextEditingController(text: "hadiqa");
+    final TextEditingController email =
+        TextEditingController(text: "hadiqa@gmail.com");
+    final TextEditingController password =
+        TextEditingController(text: "123456");
+
+    // Login Function
+    // ignore: unused_element
+
+    void login() async {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      FirebaseFirestore db = FirebaseFirestore.instance;
+
+      final String susername = email.text;
+      // ignore: unused_local_variable
+      final String sname = name.text;
+      final String spass = password.text;
+      try {
+        final UserCredential user = await auth.signInWithEmailAndPassword(
+            email: susername, password: spass);
+        final DocumentSnapshot snapshot =
+            await db.collection("users").doc(user.user!.uid).get();
+        // ignore: unused_local_variable
+        final data = snapshot.data();
+        // ignore: avoid_print
+        print("User is Logged in ");
+        Loading();
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => MyNewsApp()));
+      } catch (e) {
+        // ignore: avoid_print
+
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              // ignore: unused_local_variable
+              final message;
+              return AlertDialog(content: Text("User Not Valid"));
+            });
+      }
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("Login Page"),
+        backgroundColor: Colors.redAccent[700],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -28,18 +72,19 @@ class _LoginState extends State<Login> {
               child: Center(
                 // ignore: sized_box_for_whitespace
                 child: Container(
-                    width: 200,
-                    height: 150,
+                    width: 400,
+                    height: 300,
                     /*decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(50.0)),*/
-                    child: Image.asset('asset/images/flutter-logo.png')),
+                    child: Image.asset('assets/images/logo.png')),
               ),
             ),
             Padding(
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: email,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
@@ -51,6 +96,7 @@ class _LoginState extends State<Login> {
                   left: 15.0, right: 15.0, top: 15, bottom: 0),
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: password,
                 obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -66,16 +112,19 @@ class _LoginState extends State<Login> {
               },
               child: Text(
                 'Forgot Password',
-                style: TextStyle(color: Colors.blue, fontSize: 15),
+                style: TextStyle(color: Colors.redAccent[700], fontSize: 15),
               ),
             ),
             Container(
               height: 50,
               width: 250,
               decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
+                  color: Colors.redAccent[700],
+                  borderRadius: BorderRadius.circular(20)),
               child: FlatButton(
-                onPressed: () {},
+                onPressed: () {
+                  login();
+                },
                 child: Text(
                   'Login',
                   style: TextStyle(color: Colors.white, fontSize: 25),
@@ -86,6 +135,7 @@ class _LoginState extends State<Login> {
               height: 40,
             ),
             ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.redAccent[700]),
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => SignUpPage()));

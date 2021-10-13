@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:sizer/sizer.dart';
 import 'dart:convert';
-import 'methods.dart';
+import 'package:ansar_news/methods.dart';
 
 // ignore: must_be_immutable
 class Cate extends StatefulWidget {
@@ -27,14 +27,21 @@ class _State extends State<Cate> {
 
     getNews(String Query) async {
       String url = "";
-      if (Query == "Top Stories" ||
-          Query == "Headlines" ||
-          Query == "Sprots News") {
+      if (Query == "Health") {
         url =
-            "https://newsapi.org/v2/everything?q=Query&from=2021-10-05&to=2021-10-05&sortBy=popularity&apiKey=d4459bea8a1948c8af4d1284ccb160af";
+            "https://newsapi.org/v2/top-headlines/sources?category=Health&apiKey=d4459bea8a1948c8af4d1284ccb160af";
+      } else if (Query == "Top-Headlines") {
+        url =
+            "https://newsapi.org/v2/Top-Headlines?country=us&apiKey=d4459bea8a1948c8af4d1284ccb160af";
+      } else if (Query == "Sports") {
+        url =
+            "https://newsapi.org/v2/top-headlines/sources?category=Sports&apiKey=d4459bea8a1948c8af4d1284ccb160af";
+      } else if (Query == "Technology") {
+        url =
+            "https://newsapi.org/v2/top-headlines/sources?category=Technology&apiKey=d4459bea8a1948c8af4d1284ccb160af";
       } else {
         url =
-            "https://newsapi.org/v2/everything?q=Query&from=2021-10-05&to=2021-10-05&sortBy=popularity&apiKey=d4459bea8a1948c8af4d1284ccb160af";
+            "https://newsapi.org/v2/Top-Headlines?country=us&apiKey=d4459bea8a1948c8af4d1284ccb160af";
       }
 
       Response response = await get(Uri.parse(url));
@@ -49,13 +56,13 @@ class _State extends State<Cate> {
           });
         });
       });
+      void initState() {
+        super.initState();
+        getNews(widget.Query);
+      }
     }
 
     // ignore: unused_element
-    void initState() {
-      super.initState();
-      getNews(widget.Query);
-    }
 
     return Scaffold(
       body: Container(

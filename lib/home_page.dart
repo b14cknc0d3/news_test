@@ -10,7 +10,6 @@ import 'package:sizer/sizer.dart';
 import 'newsview.dart';
 import 'category.dart';
 
-
 // ignore: use_key_in_widget_constructors
 class Home extends StatefulWidget {
   @override
@@ -25,7 +24,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     getNews("tech");
-    getNewsFromSource("TechCrunch");
+    getNewsFromSource("reuters");
   }
 
   // ignore: annotate_overrides
@@ -35,7 +34,7 @@ class _HomeState extends State<Home> {
             centerTitle: true,
             backgroundColor: Colors.redAccent[700],
             title: Text(
-              'MY NEWS APP',
+              'Ansar News',
               style: TextStyle(color: Colors.white),
             )),
         // ignore: avoid_unnecessary_containers
@@ -169,7 +168,7 @@ class _HomeState extends State<Home> {
                                                         instance.newsHeading,
                                                         style: TextStyle(
                                                             fontSize: 1.8.h,
-                                                            color: Colors.black,
+                                                            color: Colors.white,
                                                             fontWeight:
                                                                 FontWeight
                                                                     .bold),
@@ -259,7 +258,7 @@ class _HomeState extends State<Home> {
                                                           fontSize: 2.h,
                                                           fontWeight:
                                                               FontWeight.bold,
-                                                          color: Colors.black),
+                                                          color: Colors.white),
                                                     ),
                                                     Text(
                                                         newsList[index]
@@ -288,6 +287,8 @@ class _HomeState extends State<Home> {
                       margin:
                           EdgeInsets.symmetric(horizontal: 1.h, vertical: 2.h),
                       child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.redAccent[700]),
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -311,16 +312,16 @@ class _HomeState extends State<Home> {
   List<MyNewsQueryModel> newsListSlider = <MyNewsQueryModel>[];
   List<MyNewsQueryModel> newsList = <MyNewsQueryModel>[];
   List<String> navBarItems = [
-    'Top Stories',
-    'Headlines',
-    'Popular News',
-    'Sports News',
+    'Health',
+    'Top Headlines',
+    'Sports',
+    'Technology',
   ];
   bool Loading = true;
 
   getNews(String Query) async {
     String url =
-        "https://newsapi.org/v2/everything?q=Query&from=2021-10-05&to=2021-10-05&sortBy=popularity&apiKey=d4459bea8a1948c8af4d1284ccb160af";
+        "https://newsapi.org/v2/everything?domains=techcrunch.com,thenextweb.com&apiKey=d4459bea8a1948c8af4d1284ccb160af";
     Response response = await get(Uri.parse(url));
     Map data = jsonDecode(response.body);
     setState(() {
@@ -337,7 +338,7 @@ class _HomeState extends State<Home> {
 
   getNewsFromSource(String source) async {
     String url =
-        "https://newsapi.org/v2/everything?q=Query&from=2021-10-05&to=2021-10-05&sortBy=popularity&apiKey=d4459bea8a1948c8af4d1284ccb160af";
+        "https://newsapi.org/v2/top-headlines?sources=$source&apiKey=d4459bea8a1948c8af4d1284ccb160af";
     Response response = await get(Uri.parse(url));
     Map data = jsonDecode(response.body);
     setState(() {
